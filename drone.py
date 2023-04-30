@@ -77,7 +77,7 @@ def send_ned_velocity(vx, vy, vz, duration):
         time.sleep(1)
 
 def go_forward(distance, velocity):
-    duration = int(distance / velocity)
+    duration = int(abs(distance) / velocity)
     yaw = vehicle.attitude.yaw
     vx = math.cos(yaw) * velocity
     vy = math.sin(yaw) * velocity
@@ -85,7 +85,7 @@ def go_forward(distance, velocity):
     time.sleep(duration)
 
 def go_backward(distance, velocity):
-    duration = int(distance / velocity)
+    duration = int(abs(distance) / velocity)
     yaw = vehicle.attitude.yaw
     vx = -math.cos(yaw) * velocity
     vy = -math.sin(yaw) * velocity
@@ -93,7 +93,7 @@ def go_backward(distance, velocity):
     time.sleep(duration)
 
 def go_right(distance, velocity):
-    duration = int(distance / velocity)
+    duration = int(abs(distance) / velocity)
     yaw = vehicle.attitude.yaw
     vx = -math.sin(yaw) * velocity
     vy = math.cos(yaw) * velocity
@@ -101,7 +101,7 @@ def go_right(distance, velocity):
     time.sleep(duration)
 
 def go_left(distance, velocity):
-    duration = int(distance / velocity)
+    duration = int(abs(distance) / velocity)
     yaw = vehicle.attitude.yaw
     vx = math.sin(yaw) * velocity
     vy = -math.cos(yaw) * velocity
@@ -217,12 +217,12 @@ try:
     disty = 0
 
     arm_and_takeoff(10)
-    time.sleep(5)
+    time.sleep(3)
 
     observe()
-    time.sleep(5)
+    time.sleep(2)
 
-    close_camera()
+
 
     distx = calculate_ground_distance_x(centroid_x,w,drone_height,fov_degrees)
     disty = calculate_ground_distance_y(centroid_y, h, drone_height, fov_degrees)
