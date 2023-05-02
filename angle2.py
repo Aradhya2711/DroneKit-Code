@@ -18,7 +18,7 @@ if (sys.platform == 'linux' and not os.environ.get('DISPLAY')):
 
 centroid_x = None
 centroid_y = None
-
+e
 w= 640
 h= 480
 
@@ -214,7 +214,9 @@ def calculate_ground_distance_y(centroid_y, h, drone_height, fov_degrees):
 def cartesian_to_polar(x, y):
     r = math.sqrt(x**2 + y**2)
     theta = math.atan2(y, x)
-    return r, theta
+    theta_degrees = math.degrees(theta)  # Convert the angle to degrees
+    return r, theta_degrees
+
 
 def read_last_coordinate(file_path):
     with open(file_path, 'r') as file:
@@ -239,17 +241,17 @@ try:
     dronex_file = os.path.expanduser('~/dronex.txt')
     droney_file = os.path.expanduser('~/droney.txt')
 
-    centroid_x = read_last_coordinate(dronex_file)
-    centroid_y = read_last_coordinate(droney_file)
+    centroid_y = read_last_coordinate(dronex_file)
+    centroid_x = read_last_coordinate(droney_file)
 
     distx = calculate_ground_distance_x(centroid_x, w, drone_height, fov_degrees)
     disty = calculate_ground_distance_y(centroid_y, h, drone_height, fov_degrees)
 
     distd = math.sqrt((distx * distx) + (disty * disty))
 
-    r, theta = cartesian_to_polar(centroid_x, centroid_y)
+    r, theta_degrees = cartesian_to_polar(centroid_x, centroid_y)
 
-    angle = 90 - theta
+    angle = 90 - theta_degrees
 
     set_yaw_angle(angle, relative=True)
     time.sleep(3)
