@@ -53,8 +53,10 @@ with ImageImpulseRunner(modelfile) as runner:
 
                 if "bounding_boxes" in res["result"].keys():
                     for bb in res["result"]["bounding_boxes"]:
-                        centroid_x = bb['x'] + bb['width'] // 2
-                        centroid_y = bb['y'] + bb['height'] // 2
+                        centroid_x = bb['x'] + bb['width'] // 2 - 120
+                        centroid_y = (bb['y'] + bb['height'] // 2 - 140)*-1
+
+
                         print('Centroid of', bb['label'], ': x =', centroid_x, ', y =', centroid_y)
                         dronex_file.write(str(centroid_x) + "\n")
                         droney_file.write(str(centroid_y) + "\n")
@@ -66,7 +68,7 @@ with ImageImpulseRunner(modelfile) as runner:
                         break
 
                 next_frame = now() + 1
-                if (now() - start_time) > 8000:
+                if (now() - start_time) > 250000:
                     break
     finally:
         if (runner):
